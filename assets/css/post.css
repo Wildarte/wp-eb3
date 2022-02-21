@@ -1,0 +1,222 @@
+.header_post{
+    margin: 40px auto;
+}
+.title_post{
+    text-align: center;
+    font-size: 2.5em;
+    font-weight: 300;
+    width: 70%;
+    margin: auto;
+}
+.autor_date_post{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 70%;
+    margin: 60px auto;
+}
+.author_post{
+    display: inline;
+    font-size: 1.2em;
+    font-weight: 500;
+    color: #333;
+}
+.image_post{
+    width: 100%;
+    border-radius: 20px;
+    object-fit: cover;
+    height: 480px;
+    margin: 20px auto 40px;
+}
+.content_post{
+    max-width: 980px;
+    margin: auto;
+    display: flex;
+    position: relative;
+}
+.text_post{
+    max-width: 860px;
+    margin: auto;
+}
+.shares_posts{
+    position: sticky;
+    top: 20vh;
+    left: 0;
+    height: 180px;
+    padding-right: 10px;
+}
+.shares_posts ul{
+    display: block;
+    list-style: none;
+}
+
+.shares_posts ul li{
+    display: flex;
+    background-color: #ddd;
+    border-radius: 4px;
+    margin: 5px 0;
+}
+.shares_posts ul li{
+
+}
+.shares_posts ul li a{
+    padding: 5px 8px;
+    color: var(--cor-main);
+}
+
+.posts_relation{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 20px auto 80px;
+}
+.header_posts_relacionados{
+    width: 100%;
+    margin: 40px auto;
+}
+.header_posts_relacionados h3{
+    text-align: left;
+    font-size: var(--lg-title);
+    font-weight: 600;
+    padding: 10px;
+    color: #333;
+}
+.body_posts_relacionados{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.card_post_relacionado{
+    margin: 10px;
+    flex-basis: calc(33.33% - 20px);
+    position: relative;
+}
+.card_post_relacionado:hover h4{
+    color: var(--cor-main);
+}
+.thumb_post_relacionado{
+    width: 100%;
+    object-fit: cover;
+    height: 240px;
+    border-radius: 12px;
+}
+.card_post_relacionado h4{
+    font-size: var(--lg-text);
+    font-size: 400;
+    color: #222;
+    margin: 5px 0 10px 0;
+}
+.author_posts_relacionado{
+    display: flex;
+    align-items: center;
+}
+.photo_user_post_relacionado{
+    width: 24px;
+    height: 24px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 50%;
+}
+
+a.link_post_relacionado{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+@media(max-width: 1024px){
+
+}
+@media(max-width: 980px){
+    .title_post{
+        width: 100%;
+        padding: 10px;
+    }
+    .body_post{
+        padding: 10px;
+    }
+    .image_post{
+        height: 420px;
+        border-radius: 10px;
+    }
+    .card_post_relacionado{
+        flex-basis: calc(100% - 20px);
+    }
+    .thumb_post_relacionado{
+        height: 290px;
+    }
+}
+@media(max-width: 768px){
+    .title_post{
+        font-size: 2em;
+        text-align: left;
+    }
+    .autor_date_post{
+        width: 100%;
+        padding: 10px;
+        margin: 30px auto;
+    }
+    .image_post{
+        height: 340px;
+    }
+    .card_post_relacionado{
+        margin: 20px 10px;
+    }
+}
+@media(max-width: 600px){
+    .title_post{
+        font-size: 1.6em;
+    }
+    .image_post{
+        height: 280px;
+    }
+    .header_posts_relacionados{
+        margin: 20px auto;
+    }
+    .header_posts_relacionados h3{
+        font-size: var(--sm-title);
+    }
+    .thumb_post_relacionado{
+        height: 220px;
+    }
+    .card_post_relacionado h4{
+        font-size: var(--md-text);
+    }
+}
+@media(max-width: 420px){
+    .title_post{
+        font-size: 1.4em;
+    }
+    .image_post{
+        height: 220px;
+        border-radius: 5px;
+    }
+    .thumb_post_relacionado{
+        height: 190px;
+        border-radius: 8px;
+    }
+}
+@media(max-width: 380px){
+    .header_post{
+        margin: 30px auto 20px;
+    }
+    .title_post{
+        font-size: 1.2em;
+    }
+    .autor_date_post{
+        margin: 10px auto;
+    }
+    .author_post, .autor_date_post time{
+        font-size: .9em;
+    }
+    .image_post{
+        height: 190px;
+        margin: 20px auto;
+    }
+}
+@media(max-width: 320px){
+
+}
