@@ -4,23 +4,23 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./assets/css/owl.carousel.min.css">
-    <link rel="stylesheet" href="./assets/css/owl.theme.default.min.css">
-    <link rel="stylesheet" href="./assets/css/reset.css">
-    <link rel="stylesheet" href="./assets/css/style.css">
-    <link rel="stylesheet" href="./assets/css/m-caroussel.css">
-    <link rel="stylesheet" href="./assets/css/post.css">
-    <title>Blog EB3</title>
-    <style>
-        :root{}
-    </style>
+
+    <title><?php bloginfo('name'); ?></title>
+    <!-- wp  head -->
+    <?php wp_head() ?>
+    <!-- wp head -->
+<style>:root{ --cor-main: <?= get_option('show_cor_geral') ?>}</style>
 </head>
 <body>
     
     <header class="header">
         <div class="header_content container">
-            <a class="link_logo_home" href="#">
-                <img src="./assets/img/logo.png" alt="">
+            <a class="link_logo_home" href="<?= get_home_url(); ?>">
+                <?php
+                    $custom_logo_id = get_theme_mod( 'custom_logo' );
+                    $logo = wp_get_attachment_image_src( $custom_logo_id , 'full' );
+                ?>
+                <img src="<?=  esc_url( $logo[0] )  ?>" alt="logo do site">
             </a>
             <div class="btn_mobile">
                 <span class="bar bar1"></span>
@@ -33,12 +33,15 @@
                         <i class="bi bi-x-square"></i>
                     </span>
                 </div>
-                <ul>
-                    <li><a href="#">Home</a></li>
-                    <li><a href="#">Categorias</a></li>
-                    <li><a href="#">Sobre</a></li>
-                    <li><a href="#">Contatos</a></li>
-                </ul>
+                <?php
+
+                    wp_nav_menu([
+                        'menu' => 'menu principal',
+                        'theme_location' => 'menu-principal',
+                        'container' => false
+                    ])
+
+                ?>
             </nav>
             <div class="header_right">
                 <div class="form_search_header">

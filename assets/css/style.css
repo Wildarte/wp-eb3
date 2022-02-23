@@ -54,6 +54,7 @@ nav.menu ul{
 nav.menu ul li{
     margin: 5px 20px;
     display: flex;
+    align-items: center;
 }
 nav.menu ul li a{
     text-decoration: none;
@@ -574,13 +575,62 @@ ul.footer_social li a{
 /* mobile */
 
 
+
+/* submenus */
+nav.menu ul li.menu-item-has-children{
+    position: relative;
+    display: flex;
+}
+nav.menu ul li.menu-item-has-children::after{
+    content: "▼";
+    font-size: .8em;
+}
+nav.menu ul li.menu-item-has-children ul.sub-menu{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border-radius: 5px;
+    overflow: hidden;
+    border: 1px solid #999;
+}
+nav.menu ul li.menu-item-has-children:hover > a{
+    color: var(--cor-main);
+}
+nav.menu ul li.menu-item-has-children:hover ul.sub-menu{
+    display: flex;
+}
+nav.menu ul li.menu-item-has-children ul.sub-menu li{
+    width: 100%;
+    min-width: 220px;
+    max-width: 240px;
+    margin: 0;
+}
+nav.menu ul li.menu-item-has-children ul.sub-menu li:hover{
+    background-color: var(--cor-main);
+}
+nav.menu ul li.menu-item-has-children ul.sub-menu li:hover a{
+    color: #fff;
+}
+nav.menu ul li.menu-item-has-children ul.sub-menu li a{
+    text-align: left;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    margin: auto;
+}
+/* submenus */
+
+
 @media(max-width: 1024px){
     .cta_header a{
         display: none;
     }
 }
 
-@media(max-width: 980px){
+@media (max-width: 980px){
     .btn_mobile{
         display: flex;
     }
@@ -621,6 +671,44 @@ ul.footer_social li a{
     }
     .openMenuMobile{
         height: 100%!important;
+    }
+
+
+    nav.menu ul li.menu-item-has-children{
+        width: 100%;
+        flex-wrap: wrap;
+        position: relative;
+    }
+    nav.menu ul li.menu-item-has-children::after{
+        content: "▼";
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: .8em;
+    }
+    nav.menu ul li.menu-item-has-children:hover ul.sub-menu{
+        display: none;
+    }
+    nav.menu ul li.menu-item-has-children > a{
+        width: 100%;
+        text-align: left;
+    }
+    nav.menu ul li.menu-item-has-children ul.sub-menu{
+        display: none;
+        flex-wrap: wrap!important;
+        position: unset;
+        border: none;
+        padding: 10px;
+        overflow: auto;
+    }
+    .open_submenu_mobile{
+        display: flex!important;
+    }
+    nav.menu ul li.menu-item-has-children ul.sub-menu li{
+        display: flex;
+        flex-wrap: wrap;
+        min-width: 100%!important;
+        padding: 0;
     }
     /* menu mobile */
 
