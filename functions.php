@@ -61,6 +61,13 @@
     add_action('init', 'register_my_menu');
 
 
+    $args_header = [
+        'header-text' => true
+    ];
+    add_theme_support('custom-header',$args_header);
+
+    add_theme_support('custom-fields');
+
     require('admin/fields.php');
 
 ?>

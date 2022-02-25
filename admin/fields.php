@@ -11,6 +11,7 @@
         );
 
         include('fieldsGeral.php');
+        include('fieldsPost.php');
         include('fieldsContato.php');
 
    } 

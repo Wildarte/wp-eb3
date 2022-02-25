@@ -1,7 +1,21 @@
 <?php get_header(); ?>
 
     <main>
+        <?php
 
+            $args = [
+                'post_type' => 'post',
+                'post_name__in' => ['ola-mundo', 'other-post']
+            ];
+
+            $resp = new WP_Query($args);
+
+            if($resp->have_posts()): while($resp->have_posts()): $resp->the_post();
+                the_title();
+                echo "<br>";
+            endwhile; endif;
+
+        ?>
         <section class="section_intro_home">
             <div class="home_content container">
                 <div class="home_intro_left">

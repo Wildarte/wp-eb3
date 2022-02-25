@@ -195,8 +195,8 @@ p.home_intro_text{
 
 /* section posts */
 .section_posts{
-    padding: 40px 10px;
-    margin: 40px auto; 
+    padding: 30px 10px;
+    margin: 10px auto 40px; 
     background-color: #FAFBFF;
     border-radius: 25px;
     box-shadow: 1px 1px 60px #eee;
