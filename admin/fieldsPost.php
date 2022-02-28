@@ -38,11 +38,13 @@ function display_fields_post_top(){
 
     add_settings_section('post_top_section','','display_post_top_section','options_post');
 
-    add_settings_field('show_post_top_method','Selecione o método de listagem', 'display_post_top_method','options_post','post_top_section');
-    add_settings_field('show_post_top','Selecione o Artigo', 'display_post_top','options_post','post_top_section');
+    add_settings_field('show_post_top','Selecione os artigos do slider', 'display_post_top','options_post','post_top_section');
+    add_settings_field('show_post_top_method','Como listar os artigos de baixo', 'display_post_top_method','options_post','post_top_section');
+    add_settings_field('show_post_top_category','', 'display_post_top_category','options_post','post_top_section');
 
     register_setting('post_section', 'show_post_top_method');
     register_setting('post_section', 'show_post_top');
+    register_setting('post_section', 'show_post_top_category');
 
 }
 add_action('admin_init', 'display_fields_post_top');
@@ -51,16 +53,6 @@ function display_post_top_section(){
     ?>
         <hr>
         <h2>Artigo em destaque (SlideShow)</h2>
-    <?php
-}
-function display_post_top_method(){
-    ?>
-        <select name="show_post_top_method" id="show_post_top_method">
-            <option value="lastPost">Últimos Artigos</option>
-            <option value="category">Categoria</option>
-            <option value="keyword">Palavra-chave</option>
-            <option value="moreread">Mais Lidos</option>
-        </select>
     <?php
 }
 function display_post_top(){
@@ -131,6 +123,16 @@ function display_post_top(){
             .posts_selected input{
                 padding: 1px;
             }
+            .loading-img{
+                display: none;
+                width: 32px;
+            }
+            .loading-img img{
+                width: 100%;
+            }
+            .show-loading-img{
+                display: block;
+            }
         </style>
 
         <div class="posts_selected">
@@ -147,31 +149,49 @@ function display_post_top(){
         
         <div class="content_search_post">
             <div class="buscaPost">
-                <input type="search" name="busca_post" id="show_post_top[]" placeholder="Buscar Artigos...">
+                <input type="search" class="busca_post" name="busca_post" id="busca_post" onkeyup="buscaPost('<?= get_template_directory_uri() ?>')" placeholder="Buscar Artigos...">
                 <span class="dashicons dashicons-search"></span>
             </div>
             <div class="request_post">
-                <option value="um">Um</option>
-                <option value="dois">Dois</option>
-                <option value="tres">Três</option>
-                <option value="quatro">Quatro</option>
-                <option value="cinco">Cinco</option>
-                <option value="seis">Seis</option>
-                <option value="sete">Sete</option>
-                <option value="oito">Oito</option>
-                <option value="nove">Nove</option>
-                <option value="zero">zero</option>
+                <div class="loading-img">
+                    <img src="<?= get_template_directory_uri() ?>/assets/img/loading.gif" alt="">
+                </div>
+                <div class="request_post_content">
+
+                </div>
             </div>
         </div>
+        <script src="<?= get_template_directory_uri() ?>/admin/posts.js"></script>
         <script>
-            const opts = document.querySelectorAll('.request_post option');
+            const opts = document.getElementsByClassName('option-single-post');
             const bts_delet = document.getElementsByClassName('delet_item');
 
-            
+            function inputPost(classe){
+                console.log(this.value);
 
-            opts.forEach((item) => {
-                item.addEventListener('click', function(){
+                let pt = document.getElementById('post-'+classe);
+
+                let sp = document.createElement('span');
+                sp.setAttribute('class', 'delet_item');
+                sp.innerText = "X";
+
+                sp.addEventListener('click', deleteItem);
+
+                let inp = document.createElement('input');
+                inp.setAttribute('type', 'text');
+                inp.setAttribute('name', 'show_post_top[]');
+                inp.setAttribute('value', pt.value);
+                inp.setAttribute('readonly','readonly');
+
+                document.querySelector('.posts_selected').append(inp);
+                document.querySelector('.posts_selected').append(sp);
+            }
+
+            for(let i = 0; i < opts.length; i++){
+                opts[i].addEventListener('click', function(){
                     console.log(this.value);
+
+                    alert('test');
 
                     let sp = document.createElement('span');
                     sp.setAttribute('class', 'delet_item');
@@ -188,7 +208,7 @@ function display_post_top(){
                     document.querySelector('.posts_selected').append(inp);
                     document.querySelector('.posts_selected').append(sp);
                 });
-            });
+            }
             
             function deleteItem(){
                 this.previousElementSibling.remove();
@@ -226,6 +246,57 @@ function display_post_top(){
             
 
 
+        </script>
+    <?php
+}
+
+function display_post_top_method(){
+    $get_method = get_option('show_post_top_method');
+    ?>
+        <select name="show_post_top_method" id="show_post_top_method">
+            <option value="lastPost" <?= $get_method == "lastPost" ? "selected" : ""; ?>>Últimos Artigos</option>
+            <option value="category" <?= $get_method == "category" ? "selected" : ""; ?>>Categoria</option>
+            <option value="moreread" <?= $get_method == "moreread" ? "selected" : ""; ?>>Mais Lidos</option>
+        </select>
+    <?php
+}
+function display_post_top_category(){
+    $get_method_post = get_option('show_post_top_method');
+    $get_cat = get_option('show_post_top_category');
+
+    ?>
+        <select name="show_post_top_category" id="show_post_top_category" style="display:<?= $get_method_post == "category" ? "display" : "none" ?>">
+        ddasfsfsdfsd
+            <?php $name_term = get_nameterm_by_slugterm($get_cat); ?>
+            
+            <?php //$term_id = get_idterm_by_slugterm($get_cat); ?>
+            <?php
+                $terms = get_terms([
+                    'taxonomy' => 'category',
+                    'hide_empty' => false,
+                    //'exclude' => $term_id
+                ]);
+                foreach($terms as $term){
+                    if($term->slug == $get_cat){
+                    echo "<option value='".$term->slug."' selected >".$term->name. "</option>";      
+                    }else{
+                        echo "<option value='".$term->slug."' >".$term->name. "</option>";      
+                    }
+                }
+                
+            ?>
+        </select>
+        <script>
+            const me = document.getElementById('show_post_top_method');
+            const selec_cat = document.getElementById('show_post_top_category');
+
+            console.log(selec_cat);
+
+            me.addEventListener('change', function(){
+                if(me.value == "category"){
+                    selec_cat.style.display = "inline-block";
+                }
+            });
         </script>
     <?php
 }

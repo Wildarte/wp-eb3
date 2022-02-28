@@ -13,7 +13,9 @@
         include('fieldsGeral.php');
         include('fieldsPost.php');
         include('fieldsContato.php');
+        include('fieldsAds.php');
 
    } 
    add_action('admin_menu',  'add_new_menu_itens');
+   
 ?>
