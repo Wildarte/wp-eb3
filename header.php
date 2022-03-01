@@ -47,8 +47,8 @@
             </nav>
             <div class="header_right">
                 <div class="form_search_header">
-                    <form action="" method="post">
-                        <input type="search" name="s" id="" placeholder="Pesquisar...">
+                    <form action="<?= home_url(); ?>">
+                        <input type="text" class="search" name="s" placeholder="Pesquisar...">
                         <button type="submit" class="bi bi-search"></button>
                         <i class="bi bi-search focus-search"></i>
                     </form>

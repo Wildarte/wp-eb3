@@ -2,9 +2,12 @@
 
     <main>
         <?php
+
+        /*
             $posts = get_option('show_post_top');
             $length = count($posts);
 
+            /*
             echo "<h3>".$length ."</h3>";
 
             for($i = 0; $i < $length; $i++){
@@ -35,8 +38,12 @@
                 }
                 echo '</h1>';
             }
-            
+            */
+        
+        //verifica se é uma página de paginação, caso seja não exibe os posts fixados de slider, os posts em 3 colunas e a faixa de inscrição na newsletter
 
+        
+        if(!is_paged()):
         ?>
 
         <section class="section_intro_home">
@@ -63,21 +70,29 @@
         </section>
 
         <section class="section_posts container">
+            <?php
+                $posts = get_option('show_post_top');
+                if(is_array($posts)) $length = count($posts);
+
+                if($length > 0):
+            ?>
             <div class="post_top_home">
                 <div class="owl-carousel owl-theme my-carousel" style="">
 
                     <?php
-                            $posts = get_option('show_post_top');
-                            $length = count($posts);
-                
-                            for($i = 0; $i < $length; $i++):
-                                $args = [
-                                    'post_type' => 'post',
-                                    'title' => $posts[$i]
-                                ];
-                                $resp = new WP_Query($args);
-                
-                                if($resp->have_posts()): $resp->the_post();
+
+                        //echo "quantidade de post: ".$length;
+            
+                        for($i = 0; $i < $length; $i++):
+                            //echo $posts[$i].' / ';
+                            $args = [
+                                'post_type' => 'post',
+                                'title' => $posts[$i]
+                            ];
+                            
+                            $resp = new WP_Query($args);
+            
+                            if($resp->have_posts()): $resp->the_post();
                     ?>
                     <article class="card_post_top">
                         <?php 
@@ -107,11 +122,12 @@
 
                 </div>
             </div>
-            
 
+            <?php endif; ?>
+          
             <section class="posts_pos_top">
                 <?php
-
+                    
                     $posts_method = get_option('show_post_top_method');
                     $post_category = get_option('show_post_top_category');
                     
@@ -180,19 +196,27 @@
         </section>
 
         <?php include('inc/newsLetter.php') ?>
+        
+        <?php endif;  ?>
 
         <section class="section_last_posts container-full">
             <div class="content_last_posts container">
-                <section class="left_last_posts">
+                            
+                <section class="left_last_posts" style="<?= is_paged() ? "flex-basis: 100%" : "" ?>">
+
+                    
                     <header class="header_last_posts">
                         <h3>Últimas Publicações</h3>
                     </header>
+                    <?php if(!is_paged()): ?>
                     <?php
 
+                        
                         $args_last_post = [
                             'post_type' => 'post',
                         ];
                         $result_last_post = new WP_Query($args_last_post);
+                        
 
                         if($result_last_post->have_posts()): while($result_last_post->have_posts()): $result_last_post->the_post();
                         
@@ -214,62 +238,86 @@
                                 </time>
                             </div>
                         </div>
-                        <a class="link_post" href="#"></a>
+                        <a class="link_post" href="<?= get_the_permalink() ?>"></a>
                     </article>
-
                     <?php endwhile; endif; ?>
-
                     
+                    
+                    <?php
+                           else:
+                            
+                            /*
+                            $args_last_post = [
+                                'post_type' => 'post',
+                            ];
+                            $result_last_post = new WP_Query($args_last_post);
+                            */
+
+                        if(have_posts()): while(have_posts()): the_post();
+                    ?>
+
+
+                    <article class="card_post_pos_top">
+                        <?php 
+                            $thumb_down = get_the_post_thumbnail_url(null, 'medium');
+                            $thumb_down == "" ? $thumb_down = get_template_directory_uri().'/assets/img/default-image.png' : "";
+                        ?>
+                        <img class="thumb_post_top" src="<?= $thumb_down ?>" alt="">
+                        <h2 class="card_title_pos_top"><?= get_the_title(); ?></h2>
+                        <p class="card_resumo_post_pot"><?= get_the_excerpt() ?></p>
+                        <div class="card_author_pos_top">
+                            <div class="thumb_author_pos_top">
+                                <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
+                                <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" alt="thumbnail autor">
+                            </div>
+                            <time>
+                                <?= get_the_date("d/m/Y"); ?>
+                            </time>
+                        </div>
+                        <a class="link_post" href="<?= get_the_permalink() ?>"></a>
+                    </article>
+                    <?php endwhile; endif; //wp_reset_query(); wp_reset_postdata();  
+                endif; ?>
+                        
+                    
+                    <div class="controll_posts">
+                        <?php previous_posts_link('Voltar'); ?>
+                        <?php next_posts_link('Mais'); ?>
+                    </div>
+
+                    <!-- 
                     <div class="btn_see_more_home">
                         <a href="#">Ver mais posts</a>
                     </div>
+                     -->
                 </section>
 
+                <?php if(!is_paged()): ?>
                 <section class="right_last_posts">
-                    <!-- 
-                    <h3>Escolha do Editor</h3>
-                    <section class="body_right_last_post">
-                        <article class="card_right_last_post">
-                            <a href="#">
-                                <h4>Remarketing e retargeting: qual a diferença e quando usar cada estratégia</h4>
-                            </a>
-                            <div class="author_right_post">
-                                <div class="photo_author_right_post">
-                                    <img src="./assets/img/user.png" alt="">
-                                </div>
-                                <span class="name_author_right_post">
-                                    Redator Rock Content
-                                </span>
-                            </div>
-                        </article>
 
-                        <article class="card_right_last_post">
-                            <a href="#">
-                                <h4>Remarketing e retargeting: qual a diferença e quando usar cada estratégia</h4>
-                            </a>
-                            <div class="author_right_post">
-                                <div class="photo_author_right_post">
-                                    <img src="./assets/img/user.png" alt="">
-                                </div>
-                                <span class="name_author_right_post">
-                                    Redator Rock Content
-                                </span>
-                            </div>
-                        </article>
-                    </section>
-                    -->
+                    <?php 
+                    
+                        $post_ads = get_option('show_ads_images');
+
+                        if(!empty($post_ads)):
+                    
+                    ?>
+            
                     <section class="img_ads">
-                        <a href="#" class="card_img_ads">
-                            <img src="<?= get_template_directory_uri() ?>/assets/img/ads1.webp" alt="">
+                        <?php 
+                        
+                            for($i = 0; $i < count($post_ads); $i++):
+                            
+                        ?>
+                        <a target="_blank" href="<?= $post_ads[$i][1] ?>" class="card_img_ads">
+                            <img src="<?= $post_ads[$i][0] ?>" alt="">
                         </a>
-                        <a href="#" class="card_img_ads">
-                            <img src="<?= get_template_directory_uri() ?>/assets/img/ads2.webp" alt="">
-                        </a>
-                        <a href="#" class="card_img_ads">
-                            <img src="<?= get_template_directory_uri() ?>/assets/img/ads3.webp" alt="">
-                        </a>
+                        <?php endfor; ?>
                     </section>
+
+                    <?php endif; ?>
                 </section>
+                <?php endif; ?>
             </div>
         </section>
 

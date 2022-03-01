@@ -9,4 +9,6 @@
 
     </main>
 
-<?php endwhile; endif; get_footer(); ?>
+<?php endwhile; endif; ?>
+
+<?php get_footer(); ?>

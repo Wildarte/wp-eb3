@@ -39,7 +39,7 @@ function display_fields_post_top(){
     add_settings_section('post_top_section','','display_post_top_section','options_post');
 
     add_settings_field('show_post_top','Selecione os artigos do slider', 'display_post_top','options_post','post_top_section');
-    add_settings_field('show_post_top_method','Como listar os artigos de baixo', 'display_post_top_method','options_post','post_top_section');
+    add_settings_field('show_post_top_method','Como listar os artigos abaixo do slider', 'display_post_top_method','options_post','post_top_section');
     add_settings_field('show_post_top_category','', 'display_post_top_category','options_post','post_top_section');
 
     register_setting('post_section', 'show_post_top_method');
