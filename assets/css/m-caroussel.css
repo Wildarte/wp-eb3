@@ -51,6 +51,7 @@
 }
 .card_post_top_author .img_author img{
     width: 100%;
+    border-radius: 50%;
 }
 a.link_post{
     position: absolute;

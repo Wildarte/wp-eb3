@@ -68,6 +68,42 @@
 
     add_theme_support('custom-fields');
 
+    
+    //get name term by slug term
+    function get_nameterm_by_slugterm($slugTerm){
+        $get_id_term_query = [
+            'taxonomy' => 'category',
+            'hide_empty' => false,
+            'slug' => $slugTerm,
+        ];
+        $get_id_term = get_terms($get_id_term_query);
+
+        if($get_id_term){
+            return $get_id_term[0]->name;
+            echo "retornou true";
+        }else{
+            false;
+            echo "retornou false";
+        }
+    }
+
+
+    //funcao que atribui um valor para ranking de posts 
+    function wpb_set_count_post($postID, $val){
+        $count_key_post = 'wpb_count_post';
+        $contagem = get_post_meta($postID, $count_key_post, true);
+        if($contagem == ''){
+            delete_post_meta(155, $count_key_post);
+            add_post_meta(155, $count_key_post, '1');
+            echo "caiu no if"."<br>";
+            echo "valor da variavel contagem: ".$contagem;
+        }else{
+            update_post_meta($postID, $count_key_post, $val);
+            echo "nao caiu no if"."<br>";
+        }
+    }
+
+
     require('admin/fields.php');
 
 ?>

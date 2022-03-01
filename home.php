@@ -2,20 +2,43 @@
 
     <main>
         <?php
+            $posts = get_option('show_post_top');
+            $length = count($posts);
 
-            $args = [
-                'post_type' => 'post',
-                'post_name__in' => ['ola-mundo', 'other-post']
-            ];
+            echo "<h3>".$length ."</h3>";
 
-            $resp = new WP_Query($args);
+            for($i = 0; $i < $length; $i++){
+                $args = [
+                    'post_type' => 'post',
+                    'title' => $posts[$i]
+                ];
+                $resp = new WP_Query($args);
 
-            if($resp->have_posts()): while($resp->have_posts()): $resp->the_post();
+                if($resp->have_posts()): $resp->the_post();
                 the_title();
+                //echo get_post(get_the_ID())->post_name;
                 echo "<br>";
-            endwhile; endif;
+                endif;
+            }
+
+            
+            $imgs = get_option('show_ads_images');
+
+            $total = count($imgs);
+
+            for($item = 0; $item < $total; $item++){
+                echo '<h1>';
+                for($subitem = 0; $subitem < $total; $subitem++){
+
+                    echo $imgs[$item][$subitem] . ' ';
+
+                }
+                echo '</h1>';
+            }
+            
 
         ?>
+
         <section class="section_intro_home">
             <div class="home_content container">
                 <div class="home_intro_left">
@@ -23,12 +46,18 @@
                    
                     <h2 class="home_intro_subtitle"><?= get_option('show_subtitle_home') ?></h2>
                     <p class="home_intro_text"><?= get_option('show_description_home') ?></p>
+                    <?php
+                            $text_cta = get_option('show_text_cta');
+                            $link_cta = get_option('show_link_cta');
 
-                    <a class="home_intro_cta" href="#">Inscreva-se</a>
+                            if($text_cta):
+                    ?>
+                    <a class="home_intro_cta" href="<?= get_option('show_link_cta') ?>"><?= get_option('show_text_cta') ?></a>
+                    <?php endif; ?>
                 </div>
 
                 <div class="home_intro_right">
-                    <img src="./assets/img/img_intro.png" alt="">
+                    <img src="<?php echo wp_get_attachment_url( get_option( 'show_image_home' ) ); ?>" alt="">
                 </div>
             </div>
         </section>
@@ -36,110 +65,117 @@
         <section class="section_posts container">
             <div class="post_top_home">
                 <div class="owl-carousel owl-theme my-carousel" style="">
+
+                    <?php
+                            $posts = get_option('show_post_top');
+                            $length = count($posts);
+                
+                            for($i = 0; $i < $length; $i++):
+                                $args = [
+                                    'post_type' => 'post',
+                                    'title' => $posts[$i]
+                                ];
+                                $resp = new WP_Query($args);
+                
+                                if($resp->have_posts()): $resp->the_post();
+                    ?>
                     <article class="card_post_top">
-                        <img class="img_thump_post_top" src="./assets/img/post-top.jpg" alt="">
+                        <?php 
+                            $thumb = get_the_post_thumbnail_url(null, 'medium');
+                            $thumb == "" ? $thumb = get_template_directory_uri().'/assets/img/default-image.png' : "";
+                        ?>
+                        <img class="img_thump_post_top" src="<?= $thumb; ?>" alt="">
                         <div class="text_post_top">
-                            <h2>Saiba o que é arquitetura centrada em dados e como deixar a sua empresa preparada</h2>
-                            <p>A arquitetura centrada em dados é uma nova mentalidade de negócio, que coloca os dados no centro das organizações. N...</p>
+                            <h2><?= get_the_title(); ?></h2>
+                            <p><?= get_the_excerpt() ?></p>
 
                         </div>
 
                         <div class="card_post_top_author">
                             <div class="img_author">
-                                <img src="./assets/img/user.png" alt="">
+                            <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
+                                <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" alt="thumbnail do autor">
                             </div>
                             <time>
-                                02/02/2022
+                                <?= get_the_date("d/m/Y"); ?>
                             </time>
                         </div>
-                        <a class="link_post" href="#"></a>
+                        <a class="link_post" href="<?= get_the_permalink() ?>"></a>
                     </article>
 
-                    <article class="card_post_top">
-                        <img class="img_thump_post_top" src="./assets/img/post-top2.jpg" alt="">
-                        <div class="text_post_top">
-                            <h2>Saiba o que é arquitetura centrada em dados e como deixar a sua empresa preparada</h2>
-                            <p>A arquitetura centrada em dados é uma nova mentalidade de negócio, que coloca os dados no centro das organizações. N...</p>
-
-                        </div>
-
-                        <div class="card_post_top_author">
-                            <div class="img_author">
-                                <img src="./assets/img/user.png" alt="">
-                            </div>
-                            <time>
-                                02/02/2022
-                            </time>
-                        </div>
-                        <a class="link_post" href="#"></a>
-                    </article>
-
-                    <article class="card_post_top">
-                        <img class="img_thump_post_top" src="./assets/img/post-top3.jpg" alt="">
-                        <div class="text_post_top">
-                            <h2>Saiba o que é arquitetura centrada em dados e como deixar a sua empresa preparada</h2>
-                            <p>A arquitetura centrada em dados é uma nova mentalidade de negócio, que coloca os dados no centro das organizações. N...</p>
-
-                        </div>
-
-                        <div class="card_post_top_author">
-                            <div class="img_author">
-                                <img src="./assets/img/user.png" alt="">
-                            </div>
-                            <time>
-                                02/02/2022
-                            </time>
-                        </div>
-                        <a class="link_post" href="#"></a>
-                    </article>
+                    <?php endif; wp_reset_query(); wp_reset_postdata(); endfor; ?>
 
                 </div>
             </div>
             
 
             <section class="posts_pos_top">
+                <?php
+
+                    $posts_method = get_option('show_post_top_method');
+                    $post_category = get_option('show_post_top_category');
+                    
+                    //echo "method: ".$posts_method."<br>";
+                    //echo "categoria: ".$post_category."<br>";
+
+                    switch($posts_method):
+                        case "lastPost":
+                            $args_down = [
+                                'post_type' => 'post',
+                                'posts_per_page' => 3
+                            ];
+                        break;
+                        case "category":
+                            $args_down = [
+                                'post_type' => 'post',
+                                'category_name' => $post_category,
+                                'posts_per_page' => 3
+                            ];
+                        break;
+                        case "noreread":
+                            $args_down = [
+                                'meta_key' => 'wpb_post_views_count',
+                                'orderby' => 'meta_value_num',
+                                'order' => 'DESC',
+                                'posts_per_page' => 3
+                            ];
+                        break;
+                        default:
+                            $args_down = [
+                                'post_type' => 'post',
+                                'posts_per_page' => 3
+                            ];
+                    endswitch;
+
+                    $result_post = new WP_Query($args_down);
+
+                    if($result_post->have_posts()):
+                        while($result_post->have_posts()):
+                            $result_post->the_post();
+
+                ?>
                 <article class="card_post_pos_top">
-                    <img class="thumb_post_top" src="./assets/img/post-pos-top1.jpg" alt="">
-                    <h2 class="card_title_pos_top">A fidelidade às marcas está diminuindo: como manter os clientes engajados mesmo assim</h2>
-                    <p class="card_resumo_post_pot">Um estudo com 2.000 pessoas dos EUA e do Reino Unido pela Edit, especialista em dados de clientes, e Kin + Carta, uma co(...)</p>
+                        <?php 
+                            $thumb_down = get_the_post_thumbnail_url(null, 'medium');
+                            $thumb_down == "" ? $thumb_down = get_template_directory_uri().'/assets/img/default-image.png' : "";
+                        ?>
+                    <img class="thumb_post_top" src="<?= $thumb_down ?>" alt="">
+                    <h2 class="card_title_pos_top"><?= get_the_title(); ?></h2>
+                    <p class="card_resumo_post_pot"><?= get_the_excerpt() ?></p>
                     <div class="card_author_pos_top">
                         <div class="thumb_author_pos_top">
-                            <img src="./assets/img/user.png" alt="">
+                            <?php $mail_user = strval(get_the_author_meta('user_email', false)); ?>
+                            <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" alt="thumbnail autor">
                         </div>
                         <time>
-                            02/02/2022
+                            <?= get_the_date("d/m/Y"); ?>
                         </time>
                     </div>
-                    <a class="link_post" href="#"></a>
+                    <a class="link_post" href="<?= get_the_permalink() ?>"></a>
                 </article>
-                <article class="card_post_pos_top">
-                    <img class="thumb_post_top"  src="./assets/img/post-pos-top2.jpg" alt="">
-                    <h2 class="card_title_pos_top">A fidelidade às marcas está diminuindo: como manter os clientes engajados mesmo assim</h2>
-                    <p class="card_resumo_post_pot">Um estudo com 2.000 pessoas dos EUA e do Reino Unido pela Edit, especialista em dados de clientes, e Kin + Carta, uma co(...)</p>
-                    <div class="card_author_pos_top">
-                        <div class="thumb_author_pos_top">
-                            <img src="./assets/img/user.png" alt="">
-                        </div>
-                        <time>
-                            02/02/2022
-                        </time>
-                    </div>
-                    <a class="link_post" href="#"></a>
-                </article>
-                <article class="card_post_pos_top">
-                    <img  class="thumb_post_top" src="./assets/img/post-pos-top3.jpg" alt="">
-                    <h2 class="card_title_pos_top">A fidelidade às marcas está diminuindo: como manter os clientes engajados mesmo assim</h2>
-                    <p class="card_resumo_post_pot">Um estudo com 2.000 pessoas dos EUA e do Reino Unido pela Edit, especialista em dados de clientes, e Kin + Carta, uma co(...)</p>
-                    <div class="card_author_pos_top">
-                        <div class="thumb_author_pos_top">
-                            <img src="./assets/img/user.png" alt="">
-                        </div>
-                        <time>
-                            02/02/2022
-                        </time>
-                    </div>
-                    <a class="link_post" href="#"></a>
-                </article>
+                <?php endwhile; endif; wp_reset_query(); wp_reset_postdata(); ?>
+
+                
             </section>
         </section>
 
@@ -151,96 +187,39 @@
                     <header class="header_last_posts">
                         <h3>Últimas Publicações</h3>
                     </header>
+                    <?php
+
+                        $args_last_post = [
+                            'post_type' => 'post',
+                        ];
+                        $result_last_post = new WP_Query($args_last_post);
+
+                        if($result_last_post->have_posts()): while($result_last_post->have_posts()): $result_last_post->the_post();
+                        
+                    ?>
                     <article class="card_last_post">
-                        <img class="thumb_last_post" src="./assets/img/last-post1.jpg" alt="">
+                        <?php 
+                            $thumb_last_post = get_the_post_thumbnail_url(null, 'thumbnail');
+                            $thumb_last_post == "" ? $thumb_last_post = get_template_directory_uri().'/assets/img/default-image.png' : "";
+                        ?>
+                        <img class="thumb_last_post" src="<?= $thumb_last_post; ?>" alt="">
                         <div class="card_last_post_text">
-                            <h3>A fidelidade às marcas está diminuindo: como manter os clientes engajados mesmo assim</h3>
+                            <h3><?= get_the_title() ?></h3>
                             <div class="data_last_post">
                                 <div class="photo_author_last_post">
-                                    <img src="./assets/img/user.png" alt="">
+                                    <img src="<?= get_avatar_url($mail_user, '32', '', '', null) ?>" alt="">
                                 </div>
                                 <time>
-                                    02/02/2022
+                                    <?= get_the_date("d/m/Y"); ?>
                                 </time>
                             </div>
                         </div>
                         <a class="link_post" href="#"></a>
                     </article>
-                    <article class="card_last_post">
-                        <img class="thumb_last_post" src="./assets/img/last-post2.jpg" alt="">
-                        <div class="card_last_post_text">
-                            <h3>A fidelidade às marcas está diminuindo: como manter os clientes engajados mesmo assim</h3>
-                            <div class="data_last_post">
-                                <div class="photo_author_last_post">
-                                    <img src="./assets/img/user.png" alt="">
-                                </div>
-                                <time>
-                                    02/02/2022
-                                </time>
-                            </div>
-                        </div>
-                        <a class="link_post" href="#"></a>
-                    </article>
-                    <article class="card_last_post">
-                        <img class="thumb_last_post" src="./assets/img/last-post3.jpg" alt="">
-                        <div class="card_last_post_text">
-                            <h3>A fidelidade às marcas está diminuindo: como manter os clientes engajados mesmo assim</h3>
-                            <div class="data_last_post">
-                                <div class="photo_author_last_post">
-                                    <img src="./assets/img/user.png" alt="">
-                                </div>
-                                <time>
-                                    02/02/2022
-                                </time>
-                            </div>
-                        </div>
-                        <a class="link_post" href="#"></a>
-                    </article>
-                    <article class="card_last_post">
-                        <img class="thumb_last_post" src="./assets/img/last-post4.jpg" alt="">
-                        <div class="card_last_post_text">
-                            <h3>A fidelidade às marcas está diminuindo: como manter os clientes engajados mesmo assim</h3>
-                            <div class="data_last_post">
-                                <div class="photo_author_last_post">
-                                    <img src="./assets/img/user.png" alt="">
-                                </div>
-                                <time>
-                                    02/02/2022
-                                </time>
-                            </div>
-                        </div>
-                        <a class="link_post" href="#"></a>
-                    </article>
-                    <article class="card_last_post">
-                        <img class="thumb_last_post" src="./assets/img/last-post5.jpg" alt="">
-                        <div class="card_last_post_text">
-                            <h3>A fidelidade às marcas está diminuindo: como manter os clientes engajados mesmo assim</h3>
-                            <div class="data_last_post">
-                                <div class="photo_author_last_post">
-                                    <img src="./assets/img/user.png" alt="">
-                                </div>
-                                <time>
-                                    02/02/2022
-                                </time>
-                            </div>
-                        </div>
-                        <a class="link_post" href="#"></a>
-                    </article>
-                    <article class="card_last_post">
-                        <img class="thumb_last_post" src="./assets/img/last-post6.jpg" alt="">
-                        <div class="card_last_post_text">
-                            <h3>A fidelidade às marcas está diminuindo: como manter os clientes engajados mesmo assim</h3>
-                            <div class="data_last_post">
-                                <div class="photo_author_last_post">
-                                    <img src="./assets/img/user.png" alt="">
-                                </div>
-                                <time>
-                                    02/02/2022
-                                </time>
-                            </div>
-                        </div>
-                        <a class="link_post" href="#"></a>
-                    </article>
+
+                    <?php endwhile; endif; ?>
+
+                    
                     <div class="btn_see_more_home">
                         <a href="#">Ver mais posts</a>
                     </div>

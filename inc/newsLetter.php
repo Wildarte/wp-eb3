@@ -1,8 +1,8 @@
 <section class="section_subscribe container-full">
     <div class="content_subscribe container">
         <div class="subscribe_left">
-            <h3><strong>Inscreva-se</strong> em nosso blog</h3>
-            <p>Acesse, em primeira mão, nossos principais posts diretamente em seu email</p>
+            <h3><?= get_option('show_title_newsletter') ?></h3>
+            <p><?= get_option('show_subtitle_newsletter') ?></p>
         </div>
         <div class="subscribe_right">
             <form action="" method="post" class="form_news_letter" id="section_form">

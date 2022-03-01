@@ -23,3 +23,4 @@ btnOpenMenu.addEventListener('click',() => {
 btnCloseMenu.addEventListener('click',() => {
     mob.classList.remove('openMenuMobile');
 });
+

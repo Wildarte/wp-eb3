@@ -9,7 +9,9 @@
     <!-- wp  head -->
     <?php wp_head() ?>
     <!-- wp head -->
-<style>:root{ --cor-main: <?= get_option('show_cor_geral') ?>}</style>
+    <?php $color_global = get_option('show_cor_geral'); ?>
+    
+<style> <?php $color_global != "" ? ":root{ --cor-main: <?= ".$color_global."; ?>}" : ""; ?> </style>
 </head>
 <body>
     
@@ -52,7 +54,14 @@
                     </form>
                 </div>
                 <div class="cta_header">
-                    <a href="#">Inscreva-se</a>
+                    <?php
+                            $text_cta = get_option('show_text_cta');
+                            $link_cta = get_option('show_link_cta');
+
+                            if($text_cta):
+                    ?>
+                    <a href="<?= get_option('show_link_cta') ?>"><?= get_option('show_text_cta') ?></a>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

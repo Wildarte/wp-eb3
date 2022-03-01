@@ -350,7 +350,7 @@ p.home_intro_text{
 }
 .card_last_post img.thumb_last_post{
     width: calc(30% - 20px);
-    height: auto;
+    height: 175px;
     margin: 10px;
     object-fit: cover;
     border-radius: 10px;
@@ -374,6 +374,7 @@ p.home_intro_text{
 }
 .photo_author_last_post img{
     width: 100%;
+    border-radius: 50%;
 }
 .btn_see_more_home{
     width: 100%;
