@@ -2,16 +2,14 @@
 
 <?php
 
-    $s = $_GET['s'];
+$categoria = get_category(get_query_var('cat'))->name;
 
-    $args_search = [
-        'post_type' => 'post',
-        's' => $s,
-        'posts_per_page' => -1
-    ];
-    $result_search = new WP_Query($args_search);
+$args_category_page = [
+    'post_type' => 'post',
+    'category_name' => $categoria
+];
 
-    
+$result_category_page = new WP_Query($args_category_page);
 
 ?>
 <style>
@@ -22,7 +20,11 @@
     .header_search h2{
         font-size: 2em;
         font-weight: 300;
-        padding: 15px;
+        padding: 0 15px 15px 15px;
+    }
+    .header_search h4{
+        padding: 15px 15px 0 15px;
+        font-weight: 300;
     }
     .no_result{
         display: flex;
@@ -45,14 +47,15 @@
         }
     }
 </style>
-    <main style="margin-bottom: 60px;">
+    <main>
 
         <header class="container header_search">
-            <h2>Resultados da pesquisa para: <strong>"<?= $s ?>"</strong></h2>
+            <h4>Categoria:</h4>
+            <h2><?= $categoria; ?></h2>
         </header>
 
         <section class="container" style="display: flex; flex-wrap: wrap; padding: 10px">
-            <?php if($result_search->have_posts()): while($result_search->have_posts()): $result_search->the_post(); ?>
+            <?php if($result_category_page->have_posts()): while($result_category_page->have_posts()): $result_category_page->the_post(); ?>
             <article class="card_post_pos_top">
                         <?php 
                             $thumb_down = get_the_post_thumbnail_url(null, 'medium');
@@ -80,13 +83,11 @@
                 </div>
                 <?php endif; wp_reset_query(); wp_reset_postdata(); ?>
         </section>
-        
-        <!-- 
+
         <div class="controll_posts">
-            <?php previous_posts_link('Voltar'); ?>
-            <?php next_posts_link('Mais'); ?>
-        </div>
-         -->
+                        <?php previous_posts_link('Voltar'); ?>
+                        <?php next_posts_link('Mais'); ?>
+                    </div>
 
     </main>
 

@@ -32,7 +32,7 @@ function sendForm(url){
                 }, 2000)
             break;
             default:
-                document.getElementById("retorno_form").innerHTML = "<strong style='color: orange'>Erro desconhecido</strong>";
+                document.getElementById("retorno_form").innerHTML = "<strong style='color: orange'>Erro desconhecido</strong>"+resposta;
                 document.getElementById('btn_news_letter').innerHTML = "Enviar";
         }
         console.log(resposta);

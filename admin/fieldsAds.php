@@ -196,7 +196,7 @@ function display_ads_images(){
        
 
         <button id="add_item">
-            Add
+            Adicionar
         </button>
 
         <div class="ads_table">

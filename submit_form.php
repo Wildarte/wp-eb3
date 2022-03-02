@@ -1,6 +1,6 @@
 <?php
 
-//require '../../../wp-config.php';
+require '../../../wp-config.php';
 
 //$host = get_option("smtp_host");
 
@@ -20,23 +20,23 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'):
             echo "4"; //caso algum campo obrigatório esteja vazio
         else:
 
-            /*
-            $host = get_option("smtp_host");
-            $username = get_option("smtp_username");
-            $password = get_option("smtp_password");
-            $port = get_option("smtp_port");
-            $smtp_email = get_option("smtp_email");
-            $smtp_secure = get_option("smtp_secure");
-            $emailContato = get_option("email_empresa");
-            */
+            
+            $host = get_option("show_host");
+            $username = get_option("show_smtp_username");
+            $password = get_option("show_smtp_senha");
+            $port = get_option("show_smtp_porta");
+            $smtp_email = get_option("show_smtp_email");
+            $smtp_secure = get_option("show_smtp_secure");
+            $emailContato = get_option("show_email_contato");
+            
 
-            $host = "smtp.gmail.com";
-            $username = "seguiareceitaof@gmail.com";
-            $password = "Wild.1992";
-            $port = "465";
-            $smtp_email = "seguiareceitaof@gmail.com";
-            $smtp_secure = "ssl/tls";
-            $emailContato = "wildarte10@gmail.com";
+            //$host = "smtp.gmail.com";
+            //$username = "seguiareceitaof@gmail.com";
+            //$password = "Wild.1992";
+            //$port = "465";
+            //$smtp_email = "seguiareceitaof@gmail.com";
+            //$smtp_secure = "ssl/tls";
+            //$emailContato = "wildarte10@gmail.com";
 
             $nome = "do site";
             $email = $_POST['emailForm'];

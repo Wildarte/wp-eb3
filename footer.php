@@ -2,10 +2,10 @@
         <div class="footer_main container">
             <div class="footer_left">
                 <h3>
-                Quer receber mais conteúdos brilhantes como esse de graça?
+                <?= get_option('show_footer_title') ?>
                 </h3>
                 <h4>
-                Inscreva-se para receber nossos conteúdos por email e participe da comunidade da Rock Content!
+                <?= get_option('show_footer_subtitle') ?>
                 </h4>
             </div>
 
@@ -106,15 +106,20 @@
             });
         });
         const bf = document.getElementById('btn_news_letter');
-        const bf2 = document.getElementById('btn_news_letter2')
-        bf.addEventListener('click', (e) => {
-            e.preventDefault();
-            sendForm('<?= get_template_directory_uri() ?>/submit_form.php');
-        });
-        bf2.addEventListener('click', (e) => {
-            e.preventDefault();
-            sendForm2('<?= get_template_directory_uri() ?>/submit_form.php');
-        });
+        const bf2 = document.getElementById('btn_news_letter2');
+        if(bf){
+            bf.addEventListener('click', (e) => {
+                e.preventDefault();
+                sendForm('<?= get_template_directory_uri() ?>/submit_form.php');
+            });
+        }
+        if(bf2){
+            bf2.addEventListener('click', (e) => {
+                e.preventDefault();
+                sendForm2('<?= get_template_directory_uri() ?>/submit_form.php');
+            });
+        }
+        
         
     </script>
 </body>

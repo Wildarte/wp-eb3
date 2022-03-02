@@ -11,7 +11,7 @@
     <!-- wp head -->
     <?php $color_global = get_option('show_cor_geral'); ?>
     
-<style> <?php $color_global != "" ? ":root{ --cor-main: <?= ".$color_global."; ?>}" : ""; ?> </style>
+<style> <?= $color_global != "" ? ":root{ --cor-main: ".$color_global."; ?>}" : ""; ?> </style>
 </head>
 <body>
     

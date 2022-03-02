@@ -208,7 +208,7 @@ p.home_intro_text{
 .posts_pos_top{
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
 }
 .card_post_pos_top{
     flex-basis: calc(33.33% - 30px);
@@ -583,8 +583,9 @@ nav.menu ul li.menu-item-has-children{
     display: flex;
 }
 nav.menu ul li.menu-item-has-children::after{
-    content: "▼";
+    content: "\2193";
     font-size: .8em;
+    margin-left: 5px;
 }
 nav.menu ul li.menu-item-has-children ul.sub-menu{
     display: none;
@@ -595,6 +596,7 @@ nav.menu ul li.menu-item-has-children ul.sub-menu{
     border-radius: 5px;
     overflow: hidden;
     border: 1px solid #999;
+    z-index: 1;
 }
 nav.menu ul li.menu-item-has-children:hover > a{
     color: var(--cor-main);
@@ -698,7 +700,7 @@ nav.menu ul li.menu-item-has-children ul.sub-menu li a{
         position: relative;
     }
     nav.menu ul li.menu-item-has-children::after{
-        content: "▼";
+        content: "\2193";
         position: absolute;
         top: 0;
         right: 0;

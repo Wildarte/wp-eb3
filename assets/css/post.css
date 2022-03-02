@@ -6,7 +6,7 @@
     font-size: 2.5em;
     font-weight: 300;
     width: 70%;
-    margin: auto;
+    margin: 60px auto 10px;
 }
 .autor_date_post{
     width: 100%;
@@ -85,7 +85,7 @@
     width: 100%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
+    justify-content: center;
 }
 .card_post_relacionado{
     margin: 10px;

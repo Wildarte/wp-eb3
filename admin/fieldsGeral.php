@@ -189,7 +189,7 @@ function display_fields_cta(){
 
     add_settings_section('cta_section','','display_cta_options_content','options_geral');
 
-    add_settings_field('show_text_cta', 'Título cabeçalho home', 'display_text_cta', 'options_geral', 'cta_section');
+    add_settings_field('show_text_cta', 'Texto CTA', 'display_text_cta', 'options_geral', 'cta_section');
     add_settings_field('show_link_cta', 'link do CTA', 'display_link_cta', 'options_geral', 'cta_section');
 
 

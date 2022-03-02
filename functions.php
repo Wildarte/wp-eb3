@@ -11,6 +11,7 @@
         wp_enqueue_style('owl-theme-default', get_template_directory_uri().'/assets/css/owl.theme.default.min.css', [], '1.0', 'all');
         wp_enqueue_style('m-caroussel', get_template_directory_uri().'/assets/css/m-caroussel.css', [], '1.0', 'all');
         wp_enqueue_style('style', get_template_directory_uri().'/assets/css/style.css', [], '1.0', 'all');
+        wp_enqueue_style('post', get_template_directory_uri().'/assets/css/post.css', [] ,'1.0', 'all');
         
     }
     add_action('wp_enqueue_scripts', 'wp_insert_scripts');
@@ -95,6 +96,20 @@
         }else{
             update_post_meta($postID, $count_key_post, $val);
             echo "nao caiu no if"."<br>";
+        }
+    }
+
+    //function for count view more popular posts
+    function wpb_set_post_views($postID) {
+        $count_key = 'wpb_post_views_count';
+        $count = get_post_meta($postID, $count_key, true);
+        if($count==''){
+            $count = 0;
+            delete_post_meta($postID, $count_key);
+            add_post_meta($postID, $count_key, '0');
+        }else{
+            $count++;
+            update_post_meta($postID, $count_key, $count);
         }
     }
 

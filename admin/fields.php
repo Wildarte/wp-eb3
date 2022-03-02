@@ -14,6 +14,8 @@
         include('fieldsPost.php');
         include('fieldsContato.php');
         include('fieldsAds.php');
+        include('fieldsFooter.php');
+        include('fieldsSMTP.php');
 
    } 
    add_action('admin_menu',  'add_new_menu_itens');
